@@ -1,0 +1,25 @@
+# Backend / docs — local only, not for the public page
+Code.gs
+SOLUTION.md
+commands.html
+create_workbook.py
+manifest.xml
+*.md
+*.py
+*.xml
+.claude/
+
+# Excel and Office files — keep out of the repo
+*.xlsx
+*.xlsm
+*.xls
+*.bak
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# OS
+Thumbs.db
+.DS_Store

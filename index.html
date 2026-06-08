@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prognozes</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Loading overlay -->
+  <div id="loading"><span>Ielādē…</span></div>
+
+  <!-- ── View 1 — Login ─────────────────────────────────────────────────── -->
+  <div id="view-login" class="view active">
+    <div class="view-inner">
+      <h2>Lūdzu izvēlieties savu vārdu</h2>
+      <div id="user-btn-container">Ielādē…</div>
+
+      <div id="password-prompt" hidden>
+        <p>Ievadiet paroli lietotājam <strong id="pw-username"></strong></p>
+        <input type="password" id="pw-input" placeholder="Parole" autocomplete="current-password" />
+        <div class="error-msg" id="pw-error"></div>
+        <div class="btn-row">
+          <button class="btn-primary" id="pw-ok">OK</button>
+          <button class="btn-secondary" id="pw-cancel">Atcelt</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── View 2 — Options ───────────────────────────────────────────────── -->
+  <div id="view-options" class="view">
+    <div class="view-inner">
+      <p class="welcome-msg" id="welcome-msg"></p>
+      <button class="nav-btn" id="btn-my-sheet">1) Mana tabula</button>
+      <button class="nav-btn" id="btn-change-pw">2) Mainīt paroli</button>
+      <button class="nav-btn" id="btn-change-name">3) Mainīt vārdu</button>
+      <button class="nav-btn" id="btn-results">4) Rezultāti</button>
+      <button class="logout-btn" id="btn-logout">Iziet</button>
+    </div>
+  </div>
+
+  <!-- ── View 3 — Change Password ──────────────────────────────────────── -->
+  <div id="view-change-pw" class="view">
+    <div class="view-inner">
+      <h3>Paroles maiņa: <span id="cpw-username"></span></h3>
+      <div class="field-group">
+        <label for="old-pw">Vecā parole</label>
+        <input type="password" id="old-pw" autocomplete="current-password" />
+      </div>
+      <div class="field-group">
+        <label for="new-pw">Jaunā parole (min. 4 rakstzīmes)</label>
+        <input type="password" id="new-pw" autocomplete="new-password" />
+      </div>
+      <div class="field-group">
+        <label for="confirm-pw">Apstiprināt jauno paroli</label>
+        <input type="password" id="confirm-pw" autocomplete="new-password" />
+      </div>
+      <div class="error-msg" id="cpw-error"></div>
+      <div class="success-msg" id="cpw-success"></div>
+      <div class="btn-row">
+        <button class="btn-primary" id="cpw-save">Saglabāt</button>
+        <button class="btn-secondary" id="cpw-cancel">Atcelt</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── View 5 — Change Name ─────────────────────────────────────────── -->
+  <div id="view-change-name" class="view">
+    <div class="view-inner">
+      <h3>Vārda maiņa</h3>
+      <div class="field-group">
+        <label for="new-name">Jaunais vārds</label>
+        <input type="text" id="new-name" autocomplete="name" />
+      </div>
+      <div class="error-msg" id="cname-error"></div>
+      <div class="success-msg" id="cname-success"></div>
+      <div class="btn-row">
+        <button class="btn-primary" id="cname-save">Saglabāt</button>
+        <button class="btn-secondary" id="cname-cancel">Atcelt</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── View 4 — Sheet Data ───────────────────────────────────────────── -->
+  <div id="view-sheet" class="view">
+    <div class="view-inner">
+      <div class="sheet-header">
+        <h3 id="sheet-title">Tabula</h3>
+        <div class="sheet-actions">
+          <button class="btn-primary" id="btn-save-sheet">Saglabāt izmaiņas</button>
+          <button class="btn-secondary" id="btn-back">Atpakaļ</button>
+        </div>
+      </div>
+      <div class="error-msg" id="sheet-error"></div>
+      <div class="success-msg" id="sheet-success"></div>
+      <div class="table-wrapper">
+        <table id="sheet-table"></table>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
