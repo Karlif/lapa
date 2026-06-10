@@ -255,7 +255,7 @@ async function loadSheet(sheetName) {
     sheetData    = res;
     document.getElementById("sheet-title").textContent =
       sheetName === currentUser ? currentDisplayName : "Rezultāti";
-    document.getElementById("btn-save-sheet").hidden = (sheetName === "Results");
+    document.getElementById("btn-save-sheet").hidden = true;
     renderTable(res.values, res.locked);
     showView("view-sheet");
   } catch (err) {
@@ -285,6 +285,30 @@ function renderTable(values, locked) {
         input.dataset.row = ri;
         input.dataset.col = ci;
         input.classList.add("cell-input");
+
+        input.addEventListener("blur", async () => {
+          const row = parseInt(input.dataset.row, 10);
+          const col = parseInt(input.dataset.col, 10);
+          if (input.value === sheetData.values[row][col]) return;
+          const td = input.parentElement;
+          td.classList.remove("cell-save-error");
+          try {
+            const res = await api({ action: "setCell", username: currentUser, sheet: currentSheet, row, col, value: input.value });
+            if (res.ok) {
+              sheetData.values[row][col] = input.value;
+              td.classList.add("cell-saved");
+              setTimeout(() => td.classList.remove("cell-saved"), 800);
+              document.getElementById("sheet-error").textContent = "";
+            } else {
+              td.classList.add("cell-save-error");
+              document.getElementById("sheet-error").textContent = res.error || "Saglabāšana neizdevās.";
+            }
+          } catch (err) {
+            td.classList.add("cell-save-error");
+            document.getElementById("sheet-error").textContent = "Kļūda saglabājot: " + err.message;
+          }
+        });
+
         el.appendChild(input);
       } else {
         el.textContent = cell;

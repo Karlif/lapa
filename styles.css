@@ -305,6 +305,21 @@ h3 {
   user-select: none;
 }
 
+/* ── Autosave cell feedback ──────────────────────────────────────────────── */
+@keyframes cell-saved-flash {
+  0%   { background-color: #c8f0d4; }
+  100% { background-color: transparent; }
+}
+
+#sheet-table td.cell-saved {
+  animation: cell-saved-flash 0.8s ease forwards;
+}
+
+#sheet-table td.cell-save-error {
+  background-color: #fff0f0 !important;
+  outline: 2px solid #c0392b;
+}
+
 /* ── Results conditional formatting (must come after locked-cell) ────────── */
 #sheet-table td.result-negative { color: #8b0000; }
 #sheet-table td.result-positive { color: #1b5e20; }
