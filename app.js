@@ -38,9 +38,10 @@ function setLoading(on) {
   document.getElementById("loading").classList.toggle("visible", on);
 }
 
-// ── Boot ──────────────────────────────────────────────────────────────────
-document.addEventListener("DOMContentLoaded", async () => {
+// ── User list ─────────────────────────────────────────────────────────────
+async function loadUserList() {
   const container = document.getElementById("user-btn-container");
+  container.textContent = "Ielādē…";
   try {
     const res = await api({ action: "listUsers" });
     if (res.ok && res.users.length) {
@@ -66,6 +67,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     container.textContent = "Savienojuma kļūda: " + err.message;
     console.error(err);
   }
+}
+
+// ── Boot ──────────────────────────────────────────────────────────────────
+document.addEventListener("DOMContentLoaded", async () => {
+  loadUserList();
 
   document.getElementById("pw-ok").addEventListener("click", doLogin);
   document.getElementById("pw-cancel").addEventListener("click", cancelLogin);
@@ -148,6 +154,7 @@ function doLogout() {
   currentSheet       = null;
   sheetData          = null;
   cancelLogin();
+  loadUserList();
   showView("view-login");
 }
 
