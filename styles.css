@@ -305,6 +305,11 @@ h3 {
   user-select: none;
 }
 
+/* ── Past-cutoff row separator ───────────────────────────────────────────── */
+#sheet-table tbody tr.past-cutoff td {
+  border-bottom: 3px solid #217346;
+}
+
 /* ── Autosave cell feedback ──────────────────────────────────────────────── */
 @keyframes cell-saved-flash {
   0%   { background-color: #c8f0d4; }

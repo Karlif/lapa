@@ -278,9 +278,12 @@ function renderTable(values, locked) {
   const thead = table.createTHead();
   const tbody = table.createTBody();
 
+  const tbodyRows = [];
+
   values.forEach((row, ri) => {
     const isHeader = ri === 0;
     const tr = document.createElement("tr");
+    if (!isHeader) tbodyRows.push({ tr, ri });
 
     row.forEach((cell, ci) => {
       const el = document.createElement(isHeader ? "th" : "td");
@@ -338,6 +341,13 @@ function renderTable(values, locked) {
 
     (isHeader ? thead : tbody).appendChild(tr);
   });
+
+  if (currentSheet !== "Results") {
+    for (let i = tbodyRows.length - 1; i >= 0; i--) {
+      const { tr, ri } = tbodyRows[i];
+      if (locked[ri].every(l => l)) { tr.classList.add("past-cutoff"); break; }
+    }
+  }
 }
 
 async function saveSheetChanges() {
