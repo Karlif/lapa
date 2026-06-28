@@ -258,8 +258,8 @@ async function loadSheet(sheetName) {
       showView("view-sheet");
       return;
     }
-    currentSheet = sheetName;
-    sheetData    = res;
+    currentSheet   = sheetName;
+    sheetData      = res;
     document.getElementById("sheet-title").textContent =
       sheetName === currentUser ? currentDisplayName : "Rezultāti";
     document.getElementById("btn-save-sheet").hidden = true;
@@ -341,8 +341,8 @@ function renderTable(values, locked) {
       tr.appendChild(el);
     });
 
-    // Knockout tie warning: col F (index 5) === 'F' means no draws allowed
-    if (!isHeader && String(values[ri][5]).toUpperCase() === 'F' && rowInputs[3] && rowInputs[4]) {
+    // Knockout tie warning: Results col F === 'F' means no draws allowed
+    if (!isHeader && sheetData.knockout && sheetData.knockout[ri] && rowInputs[3] && rowInputs[4]) {
       const warn = document.createElement("div");
       warn.className = "tie-warning";
       warn.textContent = "Izslēgšanas spēlēs neizšķirts nav iespējams - ievadiet par vieniem vārtiem vairāk tai komandai, kas tiks tālāk!";
