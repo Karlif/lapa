@@ -284,6 +284,7 @@ function renderTable(values, locked) {
     const isHeader = ri === 0;
     const tr = document.createElement("tr");
     if (!isHeader) tbodyRows.push({ tr, ri });
+    const rowInputs = {};
 
     row.forEach((cell, ci) => {
       const el = document.createElement(isHeader ? "th" : "td");
@@ -295,6 +296,7 @@ function renderTable(values, locked) {
         input.dataset.row = ri;
         input.dataset.col = ci;
         input.classList.add("cell-input");
+        rowInputs[ci] = input;
 
         input.addEventListener("blur", async () => {
           const row = parseInt(input.dataset.row, 10);
@@ -338,6 +340,24 @@ function renderTable(values, locked) {
 
       tr.appendChild(el);
     });
+
+    // Knockout tie warning: col F (index 5) === 'F' means no draws allowed
+    if (!isHeader && String(values[ri][5]).toUpperCase() === 'F' && rowInputs[3] && rowInputs[4]) {
+      const warn = document.createElement("div");
+      warn.className = "tie-warning";
+      warn.textContent = "Izslēgšanas spēlēs neizšķirts nav iespējams - ievadiet par vieniem vārtiem vairāk tai komandai, kas tiks tālāk!";
+      warn.hidden = true;
+      rowInputs[4].parentElement.appendChild(warn);
+
+      const checkTie = () => {
+        const n1 = parseFloat(rowInputs[3].value);
+        const n2 = parseFloat(rowInputs[4].value);
+        warn.hidden = !(isFinite(n1) && isFinite(n2) && n1 === n2);
+      };
+      rowInputs[3].addEventListener("input", checkTie);
+      rowInputs[4].addEventListener("input", checkTie);
+      checkTie();
+    }
 
     (isHeader ? thead : tbody).appendChild(tr);
   });
